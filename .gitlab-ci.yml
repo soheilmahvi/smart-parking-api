@@ -1,0 +1,18 @@
+stages:
+  - test
+  - build
+
+test:
+  image: python:3.12
+  stage: test
+  script:
+    - pip install -r requirements.txt
+    - python manage.py test
+
+build:
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker build -t smart_parking_app .
